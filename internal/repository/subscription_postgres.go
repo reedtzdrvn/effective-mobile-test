@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"strconv"
 	"time"
 
 	"github.com/effective-mobile/subscriptions/internal/domain"
@@ -65,22 +66,22 @@ func (r *SubscriptionPostgres) List(filter domain.SubscriptionFilter) ([]domain.
 	args := []interface{}{}
 	idx := 1
 	if filter.UserID != nil {
-		query += " AND user_id = $" + itoa(idx)
+		query += " AND user_id = $" + strconv.Itoa(idx)
 		args = append(args, *filter.UserID)
 		idx++
 	}
 	if filter.ServiceName != nil {
-		query += " AND service_name = $" + itoa(idx)
+		query += " AND service_name = $" + strconv.Itoa(idx)
 		args = append(args, *filter.ServiceName)
 		idx++
 	}
 	if filter.From != nil {
-		query += " AND start_date >= $" + itoa(idx)
+		query += " AND start_date >= $" + strconv.Itoa(idx)
 		args = append(args, *filter.From)
 		idx++
 	}
 	if filter.To != nil {
-		query += " AND (end_date <= $" + itoa(idx) + " OR end_date IS NULL)"
+		query += " AND (end_date <= $" + strconv.Itoa(idx) + " OR end_date IS NULL)"
 		args = append(args, *filter.To)
 		idx++
 	}
@@ -114,12 +115,12 @@ WHERE
 	idx := 3
 
 	if filter.UserID != nil {
-		query += " AND user_id = $" + itoa(idx)
+		query += " AND user_id = $" + strconv.Itoa(idx)
 		args = append(args, *filter.UserID)
 		idx++
 	}
 	if filter.ServiceName != nil {
-		query += " AND service_name = $" + itoa(idx)
+		query += " AND service_name = $" + strconv.Itoa(idx)
 		args = append(args, *filter.ServiceName)
 		idx++
 	}
@@ -129,8 +130,4 @@ WHERE
 		return 0, err
 	}
 	return sum, nil
-}
-
-func itoa(i int) string {
-	return string('0' + i)
 }

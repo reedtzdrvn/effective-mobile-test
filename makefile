@@ -24,7 +24,7 @@ goose-img:
 migrate: goose-img
 	docker run --rm \
 	  --network $(NETWORK) \
-	  -v $(PWD)/migrations:/migrations \
+	  -v ${CURDIR}/migrations:/migrations \
 	  goose-run \
 	  -dir /migrations postgres "$(DB_DSN)" up
 
