@@ -1,0 +1,176 @@
+openapi: 3.0.3
+info:
+  title: Subscriptions API
+  version: 1.0.0
+  description: REST API для управления онлайн-подписками пользователей
+servers:
+  - url: http://localhost:8080
+paths:
+  /subscriptions:
+    post:
+      summary: Создать подписку
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionCreateRequest'
+      responses:
+        '201':
+          description: Подписка создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+    get:
+      summary: Получить список подписок
+      parameters:
+        - in: query
+          name: user_id
+          schema:
+            type: string
+        - in: query
+          name: service_name
+          schema:
+            type: string
+        - in: query
+          name: from
+          schema:
+            type: string
+        - in: query
+          name: to
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Список подписок
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionResponse'
+  /subscriptions/{id}:
+    get:
+      summary: Получить подписку по id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Подписка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+    put:
+      summary: Обновить подписку
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionCreateRequest'
+      responses:
+        '200':
+          description: Обновлено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+    delete:
+      summary: Удалить подписку
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Удалено
+  /subscriptions/sum:
+    get:
+      summary: Получить сумму подписок за период
+      parameters:
+        - in: query
+          name: user_id
+          schema:
+            type: string
+        - in: query
+          name: service_name
+          schema:
+            type: string
+        - in: query
+          name: from
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: to
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Сумма
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SumResponse'
+components:
+  schemas:
+    SubscriptionCreateRequest:
+      type: object
+      required:
+        - service_name
+        - price
+        - user_id
+        - start_date
+      properties:
+        service_name:
+          type: string
+        price:
+          type: integer
+        user_id:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+    SubscriptionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        service_name:
+          type: string
+        price:
+          type: integer
+        user_id:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+    SumResponse:
+      type: object
+      properties:
+        sum:
+          type: integer
+
+
+
