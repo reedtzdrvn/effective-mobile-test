@@ -103,7 +103,6 @@ func (r *SubscriptionPostgres) List(filter domain.SubscriptionFilter) ([]domain.
 }
 
 func (r *SubscriptionPostgres) Sum(filter domain.SubscriptionSumFilter) (int, error) {
-	// query := `SELECT COALESCE(SUM(price),0) FROM subscriptions WHERE start_date >= $1 AND (end_date <= $2 OR end_date IS NULL)`
 	query := `
 	SELECT COALESCE(SUM(price), 0) 
 FROM subscriptions 
@@ -132,7 +131,6 @@ WHERE
 	return sum, nil
 }
 
-// itoa — helper для конвертации int в string (без strconv для минимализма)
 func itoa(i int) string {
 	return string('0' + i)
 }
