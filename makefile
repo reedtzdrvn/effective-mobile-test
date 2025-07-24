@@ -1,10 +1,12 @@
 # Makefile
 
+PROJECT_NAME ?= $(notdir $(CURDIR))
+
 NETWORK        ?= $(PROJECT_NAME)_default
 
 DB_DSN         = postgres://user:password@db:5432/subscriptions?sslmode=disable
 
-.PHONY: all docker-up docker-down docker-restart migrate docker-init goose-img wait-for-db
+.PHONY: all docker-up docker-down docker-restart migrate docker-init goose-img
 
 all: docker-init
 
@@ -27,8 +29,8 @@ migrate: goose-img
 	  -dir /migrations postgres "$(DB_DSN)" up
 
 
-docker-init: docker-up wait-for-db migrate
+docker-init: docker-up migrate
 
 wait-for-db:
-	@echo "Ожидание запуска БД в сети '$(NETWORK)'..."
+	@echo "Waiting for '$(NETWORK)'..."
 	@sleep 5
