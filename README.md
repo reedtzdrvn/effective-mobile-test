@@ -12,7 +12,7 @@ HTTP API сервис на Go для управления пользовател
 
 1. **Клонирование проекта**:
    ```bash
-   git clone https://github.com/reedtzdrvn/effective-mobile-test.git
+   git clone https://github.com/reedtzdrvn/subscription-service
    ```
 
 2. **Запуск сервисов**:
