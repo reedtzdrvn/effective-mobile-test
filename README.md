@@ -1,4 +1,4 @@
-# Тестовое задание для Effective Mobile
+# Subscription Service
 
 HTTP API сервис на Go для управления пользовательскими подписками с БД PostgreSQL.
 
